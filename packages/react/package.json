@@ -1,0 +1,82 @@
+{
+  "name": "98-pink-react",
+  "version": "0.1.0",
+  "description": "React component library port of 98-pink.css — a pink & blue Windows 98 UI revival.",
+  "license": "MIT",
+  "author": "Meorion <me@meorion.moe>",
+  "contributors": [
+    "Jordan Scales <scalesjordan@gmail.com>"
+  ],
+  "keywords": [
+    "react",
+    "react-components",
+    "css",
+    "windows98",
+    "pink",
+    "ui",
+    "component-library"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./style.css": "./dist/style.css",
+    "./styles/*": "./dist/styles/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "build:deps": "bun run --filter 98-pink-shared build",
+    "generate": "98-generate-styles --port react",
+    "generate:dist": "98-generate-styles --port react --dist",
+    "typecheck": "bun run build:deps && tsc --noEmit && tsc -p tsconfig.demo.json",
+    "build": "bun run build:deps && bun run generate && vite build && bun run generate:dist && tsc -p tsconfig.build.json",
+    "build:demo": "bun run build:deps && bun run generate && vite build --config vite.demo.config.ts",
+    "build:ssr": "bun run build:deps && bun run generate && vite build --config vite.ssr.config.ts",
+    "dev": "bun run build:deps && bun run generate && vite --config vite.demo.config.ts",
+    "preview": "vite preview --config vite.demo.config.ts",
+    "test": "bun run build:deps && bun run test:fidelity && bun run test:library && bun run test:dom && bun run test:demo",
+    "test:fidelity": "98-verify-fidelity --port react",
+    "test:library": "node scripts/smoke-test.mjs",
+    "test:dom": "node scripts/dom-test.mjs",
+    "test:demo": "bun run build:ssr && node scripts/ssr-check.mjs",
+    "verify": "bun run typecheck && bun run build && bun run test",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "98-pink-shared": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@98-ui/demo-content": "workspace:*",
+    "@98-ui/tools": "workspace:*",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "98-pink.css": "workspace:*",
+    "happy-dom": "catalog:",
+    "prettier": "catalog:",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.11"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meorionel/98-pink.css.git"
+  }
+}

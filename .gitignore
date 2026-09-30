@@ -1,0 +1,21 @@
+# dependencies
+node_modules/
+.buncache/
+
+# build output
+dist/
+demo-dist/
+.tmp/
+
+# Generated stylesheets.
+#
+# packages/css is the single source of truth; `tools/generate-styles.mjs` mirrors
+# it into each port. Only the framework-specific `*-extras.css` is authored here.
+packages/react/src/styles/*
+!packages/react/src/styles/react-extras.css
+packages/vue/src/styles/*
+!packages/vue/src/styles/vue-extras.css
+
+# misc
+*.log
+.DS_Store

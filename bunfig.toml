@@ -1,0 +1,10 @@
+# bun configuration for the 98-ui workspace.
+#
+# `linker = "hoisted"` keeps the single root `node_modules` layout that the two
+# ports were written against (Vite, vue-tsc and tsc all resolve peer packages
+# from the workspace root). It is also what lets the React port stay on Vite 5
+# while the Vue port is on Vite 7 without either one noticing the other.
+
+[install]
+linker = "hoisted"
+exact = false

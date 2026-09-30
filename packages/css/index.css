@@ -1,0 +1,17 @@
+/*
+ * The complete 98-pink stylesheet, for consumers whose bundler resolves
+ * `@import` (Vite, webpack, PostCSS).
+ *
+ * `style.css` is the core; everything under `additive/` are the components that
+ * used to exist only inside the React and Vue ports.
+ *
+ * These are the *authored* sources: the core still uses the `svg-load()` helper,
+ * so a plain browser or a bare `css` loader cannot read this file directly. Use
+ * `dist/98-pink.full.css` for that — it is the same thing with every icon
+ * inlined and the `@import`s resolved.
+ */
+@import "./style.css";
+@import "./additive/controls.css";
+@import "./additive/widgets.css";
+@import "./additive/display.css";
+@import "./additive/overlays.css";

@@ -1,0 +1,29 @@
+{
+  "name": "@98-ui/tools",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared build tooling for the 98-ui workspace: generates each port's stylesheet from packages/css and verifies it stayed a pure transformation.",
+  "license": "MIT",
+  "bin": {
+    "98-generate-styles": "./bin/generate-styles.mjs",
+    "98-verify-fidelity": "./bin/verify-fidelity.mjs"
+  },
+  "exports": {
+    ".": "./src/index.mjs",
+    "./ports": "./src/ports.mjs",
+    "./generate-styles": "./src/generate-styles.mjs",
+    "./verify-fidelity": "./src/verify-fidelity.mjs"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "scripts": {
+    "typecheck": "node --check src/generate-styles.mjs && node --check src/verify-fidelity.mjs"
+  },
+  "dependencies": {
+    "postcss": "catalog:",
+    "postcss-inline-svg": "catalog:"
+  }
+}

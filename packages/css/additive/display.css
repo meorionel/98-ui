@@ -1,0 +1,417 @@
+/*
+ * Presentation pieces — shared source of truth: badges, avatars, cards, typography,
+ * empty states, the hourglass spinner and the indeterminate progress marquee.
+ *
+ * Additive only — no upstream 98-pink.css rule is overridden. The status tints
+ * are the one place with hard-coded colours: the theme has no green, amber or
+ * red, and a status badge has to be able to say "warning" without a legend.
+ */
+
+/* ------------------------------------------------------------------ badge */
+
+.badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 1px 6px;
+	background: var(--button-surface);
+	color: var(--text-color);
+	box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
+.badge-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 11px;
+	height: 11px;
+}
+
+.badge-info {
+	color: #000080;
+}
+
+.badge-success {
+	color: #006400;
+}
+
+.badge-warning {
+	color: #8a4b00;
+}
+
+.badge-error {
+	color: var(--invalid-color);
+}
+
+/* ----------------------------------------------------------------- avatar */
+
+.avatar {
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	width: var(--avatar-size);
+	height: var(--avatar-size);
+	overflow: hidden;
+	background: var(--button-surface);
+	color: var(--text-color);
+	box-shadow: var(--border-field);
+	font-size: 11px;
+	line-height: 1;
+	text-transform: uppercase;
+	vertical-align: middle;
+}
+
+.avatar-circle {
+	border-radius: 50%;
+}
+
+.avatar-image {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.avatar-fallback {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	padding: 2px;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+/* ------------------------------------------------------------------- card */
+
+.card {
+	display: flex;
+	flex-direction: column;
+	background: var(--surface);
+	color: var(--text-color);
+	box-shadow: var(--border-window-outer), var(--border-window-inner);
+	padding: 3px;
+}
+
+.card-header {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	padding: var(--element-spacing);
+}
+
+.card-title {
+	margin: 0;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.card-description {
+	margin: 0;
+	color: var(--button-shadow);
+}
+
+.card-content {
+	padding: 0 var(--element-spacing) var(--element-spacing);
+}
+
+.card-footer {
+	display: flex;
+	align-items: center;
+	gap: var(--grouped-button-spacing);
+	padding: var(--element-spacing);
+	border-top: 1px solid var(--button-shadow);
+}
+
+/* ------------------------------------------------------------- typography */
+
+.heading {
+	margin: 0;
+}
+
+.heading-1 {
+	font-size: 18px;
+}
+
+.heading-2 {
+	font-size: 15px;
+}
+
+.heading-3 {
+	font-size: 13px;
+}
+
+.heading-4 {
+	font-size: 12px;
+}
+
+.text {
+	margin: 0;
+}
+
+/* The UI base is 11px for controls; body copy sits at 12px, like the sheet's. */
+.text-body {
+	font-size: 12px;
+}
+
+.text-lead {
+	font-size: 13px;
+}
+
+.text-muted {
+	color: var(--button-shadow);
+}
+
+.text-small {
+	font-size: 10px;
+}
+
+/*
+ * Everything inside a `Prose` block is scoped here: bare `h1`–`h4` are sized for
+ * prose upstream (5rem and down), which is far too large for this UI.
+ */
+.prose {
+	max-width: 72ch;
+}
+
+.prose > * + * {
+	margin-top: var(--element-spacing);
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+	margin: 0;
+	font-weight: bold;
+}
+
+.prose h1 {
+	font-size: 18px;
+}
+
+.prose h2 {
+	font-size: 15px;
+}
+
+.prose h3 {
+	font-size: 13px;
+}
+
+.prose h4 {
+	font-size: 12px;
+}
+
+.prose > * + h2,
+.prose > * + h3,
+.prose > * + h4 {
+	margin-top: calc(1.5 * var(--element-spacing));
+}
+
+.prose p,
+.prose ul,
+.prose ol,
+.prose blockquote,
+.prose table {
+	margin: 0;
+}
+
+.prose ul,
+.prose ol {
+	padding-left: 20px;
+}
+
+.prose li + li {
+	margin-top: 2px;
+}
+
+.prose blockquote {
+	padding: 0 var(--element-spacing);
+	border-left: 3px solid var(--border-color);
+	color: var(--button-shadow);
+}
+
+.prose blockquote footer {
+	margin-top: 2px;
+	font-style: italic;
+}
+
+.prose code {
+	padding: 0 3px;
+	background: var(--button-highlight);
+	box-shadow: var(--border-field);
+	font-family: inherit;
+}
+
+.prose pre code {
+	padding: 0;
+	background: transparent;
+	box-shadow: none;
+}
+
+.prose a {
+	color: var(--link-blue);
+}
+
+.prose hr {
+	height: 0;
+	margin: var(--element-spacing) 0;
+	border: none;
+	border-top: 1px solid var(--button-shadow);
+	border-bottom: 1px solid var(--button-highlight);
+}
+
+/* ------------------------------------------------------------------ empty */
+
+.empty {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: var(--grouped-element-spacing);
+	padding: calc(2 * var(--element-spacing));
+	color: var(--text-color);
+	text-align: center;
+}
+
+.empty-compact {
+	padding: var(--element-spacing);
+}
+
+.empty-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	color: var(--button-shadow);
+}
+
+.empty-title {
+	font-weight: bold;
+}
+
+.empty-description {
+	max-width: 44ch;
+	color: var(--button-shadow);
+}
+
+.empty-actions {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--grouped-button-spacing);
+	margin-top: 2px;
+}
+
+/* ---------------------------------------------------------------- spinner */
+
+.spinner {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: var(--spinner-size, 16px);
+	height: var(--spinner-size, 16px);
+	color: var(--text-color);
+	vertical-align: middle;
+}
+
+.spinner-small {
+	--spinner-size: 12px;
+}
+
+.spinner-default {
+	--spinner-size: 16px;
+}
+
+.spinner-large {
+	--spinner-size: 24px;
+}
+
+.spinner-glyph {
+	display: block;
+	width: 100%;
+	height: 100%;
+	/* Two frames, like the hourglass cursor flipping while Windows thinks. */
+	animation: spinner-flip 1.6s steps(1, end) infinite;
+}
+
+@keyframes spinner-flip {
+	0% {
+		transform: rotate(0deg);
+	}
+	50% {
+		transform: rotate(180deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/* ------------------------------------------------- indeterminate progress */
+
+/*
+ * The trough clips. Upstream only pads it (`padding: 4px`), so a bar that
+ * slides past the content box — which is exactly what a marquee does — would be
+ * painted outside the frame.
+ */
+.progress-indicator-indeterminate {
+	overflow: hidden;
+}
+
+/* Solid: one block sweeps across and is cut off at both edges. */
+.progress-indicator-indeterminate > .progress-indicator-bar {
+	width: 30%;
+	animation: progress-indicator-marquee 1.8s linear infinite;
+}
+
+/*
+ * Segmented: the block pattern marches *inside* a full trough instead of the
+ * bar sliding out of it — which is what the Windows 98 marquee looks like, and
+ * it means nothing can escape the frame at all.
+ */
+.progress-indicator.segmented.progress-indicator-indeterminate > .progress-indicator-bar {
+	width: 100%;
+	margin-left: 0;
+	animation: progress-indicator-blocks 1.2s linear infinite;
+}
+
+@keyframes progress-indicator-marquee {
+	from {
+		margin-left: -30%;
+	}
+	to {
+		margin-left: 100%;
+	}
+}
+
+@keyframes progress-indicator-blocks {
+	from {
+		background-position: 0 0;
+	}
+	to {
+		/* One full block period (16px block + 2px gap), so the loop is seamless. */
+		background-position: 18px 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.spinner-glyph {
+		animation-duration: 3.2s;
+	}
+
+	.progress-indicator-indeterminate > .progress-indicator-bar {
+		width: 100%;
+		margin-left: 0;
+		animation: none;
+		opacity: 0.5;
+	}
+
+	.progress-indicator.segmented.progress-indicator-indeterminate > .progress-indicator-bar {
+		animation: none;
+	}
+}

@@ -1,0 +1,615 @@
+/*
+ * Windows 98 widgets — shared source of truth: separators, keycaps, spin boxes,
+ * split panes, calendars, date pickers, balloon tips, property sheets and
+ * wizards.
+ *
+ * Additive only — no upstream 98-pink.css rule is overridden, and every colour
+ * comes from the theme's custom properties. Glyphs are `data:` URIs used as CSS
+ * masks so they follow `currentColor`.
+ */
+
+/* --------------------------------------------------------------- separator */
+
+.separator-horizontal {
+	height: 0;
+	margin: var(--element-spacing) 0;
+	border-top: 1px solid var(--button-shadow);
+	border-bottom: 1px solid var(--button-highlight);
+}
+
+.separator-vertical {
+	align-self: stretch;
+	width: 0;
+	min-height: 16px;
+	margin: 0 var(--grouped-element-spacing);
+	border-left: 1px solid var(--button-shadow);
+	border-right: 1px solid var(--button-highlight);
+}
+
+/* ------------------------------------------------------------------- kbd */
+
+.kbd {
+	display: inline-block;
+	min-width: 14px;
+	padding: 0 4px;
+	background: var(--button-surface);
+	color: var(--text-color);
+	box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+	font-family: inherit;
+	font-size: 11px;
+	line-height: 16px;
+	text-align: center;
+}
+
+/* --------------------------------------------------------------- spin box */
+
+.spin-box {
+	display: inline-flex;
+	align-items: stretch;
+	height: 21px;
+	background: var(--button-highlight);
+	box-shadow: var(--border-field);
+	vertical-align: top;
+}
+
+.field-row > .spin-box,
+.field-row-stacked > .spin-box {
+	flex: 1 1 auto;
+	min-width: 60px;
+	align-self: flex-start;
+}
+
+.spin-box-input {
+	flex: 1 1 auto;
+	min-width: 0;
+	padding: 0 3px;
+	border: none;
+	background: transparent;
+	box-shadow: none;
+	color: var(--text-color);
+	font-family: inherit;
+	font-size: 11px;
+}
+
+.spin-box-input:focus {
+	outline: none;
+}
+
+.spin-box-input:disabled {
+	color: var(--button-shadow);
+	text-shadow: 1px 1px var(--button-highlight);
+}
+
+.spin-box-buttons {
+	display: flex;
+	flex: none;
+	flex-direction: column;
+	width: 17px;
+}
+
+.spin-box-button {
+	flex: 1 1 50%;
+	min-width: 17px;
+	min-height: 0;
+	padding: 0;
+	background: var(--button-surface);
+	box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+}
+
+.spin-box-button::before {
+	content: "";
+	display: block;
+	width: 7px;
+	height: 4px;
+	margin: 0 auto;
+	background: var(--text-color);
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 4'%3E%3Cpath d='M0 4h7L3.5 0z' fill='%23000000'/%3E%3C/svg%3E")
+		center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 4'%3E%3Cpath d='M0 4h7L3.5 0z' fill='%23000000'/%3E%3C/svg%3E")
+		center / contain no-repeat;
+}
+
+.spin-box-up {
+	/* The hairline that separates the two arrows. */
+	margin-bottom: 1px;
+}
+
+.spin-box-down::before {
+	transform: rotate(180deg);
+}
+
+.spin-box-button:disabled::before {
+	background: var(--button-shadow);
+}
+
+/* ------------------------------------------------------------- split pane */
+
+.split-pane {
+	display: flex;
+	align-items: stretch;
+	min-width: 0;
+	min-height: 0;
+}
+
+.split-pane-vertical {
+	flex-direction: column;
+}
+
+.split-pane-pane {
+	flex: none;
+	min-width: 0;
+	min-height: 0;
+	overflow: auto;
+}
+
+.split-pane-pane-fill {
+	flex: 1 1 auto;
+}
+
+.split-pane-divider {
+	flex: none;
+	width: 5px;
+	background: var(--surface);
+	box-shadow: var(--border-sunken-outer), var(--border-sunken-inner);
+	cursor: col-resize;
+	touch-action: none;
+}
+
+.split-pane-vertical .split-pane-divider {
+	width: auto;
+	height: 5px;
+	cursor: row-resize;
+}
+
+.split-pane-divider:focus-visible {
+	outline: 1px dotted var(--window-frame);
+	outline-offset: -2px;
+}
+
+.split-pane-divider-dragging {
+	background: var(--button-face);
+}
+
+/* ---------------------------------------------------------------- calendar */
+
+.calendar {
+	display: inline-block;
+	padding: var(--element-spacing);
+	background: var(--surface);
+	color: var(--text-color);
+	box-shadow: var(--border-window-outer), var(--border-window-inner);
+}
+
+.calendar-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--grouped-element-spacing);
+	margin-bottom: 4px;
+}
+
+.calendar-heading {
+	flex: 1 1 auto;
+	text-align: center;
+	font-weight: bold;
+}
+
+.calendar-nav {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	min-width: 20px;
+	min-height: 18px;
+	padding: 0;
+}
+
+.calendar-nav::before {
+	content: "";
+	display: block;
+	width: 5px;
+	height: 8px;
+	background: var(--text-color);
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 8'%3E%3Cpath d='M5 0 0 4l5 4z' fill='%23000000'/%3E%3C/svg%3E")
+		center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 8'%3E%3Cpath d='M5 0 0 4l5 4z' fill='%23000000'/%3E%3C/svg%3E")
+		center / contain no-repeat;
+}
+
+.calendar-nav-previous,
+.calendar-nav-next {
+	flex: none;
+}
+
+.calendar-nav-next::before {
+	transform: rotate(180deg);
+}
+
+.calendar-nav:disabled::before {
+	background: var(--button-shadow);
+}
+
+.calendar-grid {
+	border-collapse: collapse;
+}
+
+.calendar-weekday {
+	width: 22px;
+	padding: 2px 0;
+	color: var(--button-shadow);
+	font-weight: normal;
+	text-align: center;
+}
+
+.calendar-cell {
+	padding: 0;
+	text-align: center;
+}
+
+.calendar-day {
+	width: 22px;
+	min-width: 22px;
+	min-height: 20px;
+	padding: 0;
+	background: transparent;
+	box-shadow: none;
+	/*
+	 * Deliberately no `text-shadow: none`: upstream draws button labels as a
+	 * `0 0` text-shadow over a transparent colour, so removing it hides the day.
+	 */
+}
+
+.calendar-day:not(:disabled):hover {
+	box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+}
+
+.calendar-day:focus-visible {
+	outline: 1px dotted var(--window-frame);
+	outline-offset: -2px;
+}
+
+.calendar-day-today {
+	font-weight: bold;
+}
+
+.calendar-day-selected,
+.calendar-day-selected:not(:disabled):hover {
+	background: var(--dialog-blue);
+	color: var(--button-highlight);
+	box-shadow: none;
+	/* Here the colour *is* set, so the shadow trick has to go. */
+	text-shadow: none;
+}
+
+.calendar-day:disabled {
+	color: var(--button-shadow);
+	text-shadow: 1px 1px var(--button-highlight);
+}
+
+/* ------------------------------------------------------------- date picker */
+
+.date-picker {
+	display: inline-flex;
+	align-items: stretch;
+	height: 21px;
+	background: var(--button-highlight);
+	box-shadow: var(--border-field);
+	vertical-align: top;
+}
+
+.field-row > .date-picker,
+.field-row-stacked > .date-picker {
+	flex: 1 1 auto;
+	min-width: 80px;
+	align-self: flex-start;
+}
+
+.date-picker-input {
+	flex: 1 1 auto;
+	min-width: 0;
+	padding: 0 3px;
+	border: none;
+	background: transparent;
+	box-shadow: none;
+	color: var(--text-color);
+	font-family: inherit;
+	font-size: 11px;
+}
+
+.date-picker-input:focus {
+	outline: none;
+}
+
+.date-picker-button {
+	display: flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	width: 17px;
+	min-width: 17px;
+	min-height: 0;
+	padding: 0;
+	background: var(--button-surface);
+	box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+}
+
+.date-picker-button::before {
+	content: "";
+	width: 12px;
+	height: 12px;
+	background: var(--text-color);
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M1 2h10v9H1z' fill='%23000000'/%3E%3Cpath d='M1 3h10v1H1z' fill='%23ffffff'/%3E%3Cpath d='M3 0h1v3H3zM8 0h1v3H8z' fill='%23000000'/%3E%3C/svg%3E")
+		center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M1 2h10v9H1z' fill='%23000000'/%3E%3Cpath d='M1 3h10v1H1z' fill='%23ffffff'/%3E%3Cpath d='M3 0h1v3H3zM8 0h1v3H8z' fill='%23000000'/%3E%3C/svg%3E")
+		center / contain no-repeat;
+}
+
+.date-picker-button:disabled::before {
+	background: var(--button-shadow);
+}
+
+/* The pop-up already has a frame, so the calendar inside drops its own. */
+.date-picker-popup {
+	padding: 2px;
+	background: var(--surface);
+	box-shadow: var(--border-window-outer), var(--border-window-inner);
+}
+
+.date-picker-popup .calendar {
+	padding: 4px;
+	box-shadow: none;
+}
+
+/* ------------------------------------------------------------ balloon tip */
+
+.balloon {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	max-width: 260px;
+	padding: var(--element-spacing);
+	background: var(--surface);
+	color: var(--text-color);
+	box-shadow: var(--border-window-outer), var(--border-window-inner);
+}
+
+.balloon-anchored {
+	position: fixed;
+}
+
+.balloon-docked {
+	position: fixed;
+}
+
+.balloon-bottom-right {
+	right: 16px;
+	bottom: 16px;
+}
+
+.balloon-bottom-left {
+	left: 16px;
+	bottom: 16px;
+}
+
+.balloon-top-right {
+	top: 16px;
+	right: 16px;
+}
+
+.balloon-top-left {
+	top: 16px;
+	left: 16px;
+}
+
+.balloon-body {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.balloon-title {
+	font-weight: bold;
+	margin-bottom: 2px;
+}
+
+.balloon-text {
+	color: var(--text-color);
+}
+
+.balloon-close {
+	flex: none;
+	min-width: 16px;
+	min-height: 16px;
+	padding: 0;
+	line-height: 1;
+}
+
+.balloon-icon {
+	flex: none;
+	width: 16px;
+	height: 16px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 16px 16px;
+}
+
+.balloon-icon-info {
+	background-image: var(--notification-icon-info);
+}
+
+.balloon-icon-warning {
+	background-image: var(--notification-icon-warning);
+}
+
+.balloon-icon-error {
+	background-image: var(--notification-icon-error);
+}
+
+.balloon-icon-question {
+	background-image: var(--notification-icon-question);
+}
+
+.balloon-tail {
+	position: absolute;
+	width: 0;
+	height: 0;
+	border: 12px solid transparent;
+}
+
+/* Anchored: the tail points back at the element the balloon came from. */
+.balloon[data-side="bottom"] .balloon-tail {
+	top: -22px;
+	left: 24px;
+	border-bottom-color: var(--surface);
+}
+
+.balloon[data-side="top"] .balloon-tail {
+	bottom: -22px;
+	left: 24px;
+	border-top-color: var(--surface);
+}
+
+.balloon[data-side="left"] .balloon-tail {
+	top: 20px;
+	right: -22px;
+	border-left-color: var(--surface);
+}
+
+.balloon[data-side="right"] .balloon-tail {
+	top: 20px;
+	left: -22px;
+	border-right-color: var(--surface);
+}
+
+/* Docked: the tail points at the corner it is tucked into. */
+.balloon-bottom-right .balloon-tail {
+	right: 20px;
+	bottom: -22px;
+	border-top-color: var(--surface);
+}
+
+.balloon-bottom-left .balloon-tail {
+	bottom: -22px;
+	left: 20px;
+	border-top-color: var(--surface);
+}
+
+.balloon-top-right .balloon-tail {
+	top: -22px;
+	right: 20px;
+	border-bottom-color: var(--surface);
+}
+
+.balloon-top-left .balloon-tail {
+	top: -22px;
+	left: 20px;
+	border-bottom-color: var(--surface);
+}
+
+/* ---------------------------------------------------------- property sheet */
+
+.property-page {
+	min-height: 120px;
+	padding: var(--element-spacing);
+	background: var(--surface);
+	box-shadow: var(--border-field);
+}
+
+/* The dialog's own button row supplies the bottom spacing. */
+.property-sheet .window-body {
+	margin-bottom: 0;
+}
+
+/* ----------------------------------------------------------------- wizard */
+
+.wizard-body {
+	display: flex;
+	align-items: stretch;
+	gap: var(--element-spacing);
+}
+
+.wizard-steps {
+	flex: none;
+	width: 160px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.wizard-step {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	width: 100%;
+	min-width: 0;
+	min-height: 22px;
+	padding: 2px 6px;
+	background: transparent;
+	box-shadow: none;
+	text-align: left;
+	/* The label is drawn by the upstream `0 0` text-shadow; keep it. */
+}
+
+.wizard-step:not(:disabled):hover {
+	box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+}
+
+.wizard-step:focus-visible {
+	outline: 1px dotted var(--window-frame);
+	outline-offset: -2px;
+}
+
+.wizard-step-active {
+	background: var(--dialog-blue);
+	color: var(--button-highlight);
+	box-shadow: none;
+	text-shadow: none;
+}
+
+.wizard-step-active:not(:disabled):hover {
+	background: var(--dialog-blue);
+	color: var(--button-highlight);
+	box-shadow: none;
+	text-shadow: none;
+}
+
+.wizard-step-disabled {
+	color: var(--button-shadow);
+	text-shadow: 1px 1px var(--button-highlight);
+}
+
+.wizard-step-number {
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	background: var(--button-surface);
+	color: var(--text-color);
+	box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+}
+
+.wizard-page {
+	flex: 1 1 auto;
+	min-width: 0;
+	padding: var(--element-spacing);
+	background: var(--surface);
+	box-shadow: var(--border-field);
+}
+
+.wizard-description {
+	margin: var(--grouped-element-spacing) 0 0;
+	color: var(--button-shadow);
+}
+
+.wizard-footer {
+	display: flex;
+	flex: 1 1 auto;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--element-spacing);
+}
+
+.wizard-status {
+	color: var(--text-color);
+}

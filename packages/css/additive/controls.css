@@ -1,0 +1,338 @@
+/*
+ * Command and form additions — shared source of truth: toolbars, toggle buttons,
+ * combo boxes, form fields, sortable table headers and pagers.
+ *
+ * Additive only — no upstream 98-pink.css rule is overridden. Every colour comes
+ * from the theme's custom properties, so these controls retheme with the rest of
+ * the library. The glyphs are `data:` URIs used as CSS masks, which lets them
+ * take `currentColor` and stay legible on a highlighted row.
+ */
+
+:root {
+	/* Not an upstream token: the red used for invalid fields and error text. */
+	--invalid-color: #c00000;
+}
+
+/* ----------------------------------------------------------- grouped buttons */
+
+.button-group {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--grouped-button-spacing);
+}
+
+.button-group-vertical {
+	flex-direction: column;
+	align-items: stretch;
+}
+
+/* ------------------------------------------------------------------ toolbar */
+
+.toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 2px;
+	padding: 2px;
+	background: var(--surface);
+}
+
+/*
+ * Toolbar buttons are flat until the pointer or keyboard reaches them, the way
+ * the Windows 98 common toolbar behaves. `.force-active` is the pressed look the
+ * `Button` component applies to a toggled (`aria-pressed`) button.
+ */
+.toolbar-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	min-width: 23px;
+	min-height: 22px;
+	padding: 1px 3px;
+	background: transparent;
+	box-shadow: none;
+	/*
+	 * No `text-shadow: none` on purpose. Upstream paints every button label
+	 * with `color: transparent` plus a `0 0` text-shadow, so removing the
+	 * shadow without restoring a real colour makes the label invisible.
+	 */
+}
+
+.toolbar-button:not(:disabled):hover,
+.toolbar-button:not(:disabled):focus-visible {
+	box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+}
+
+.toolbar-button:not(:disabled):active,
+.toolbar-button.force-active:not(:disabled) {
+	background: var(--button-surface);
+	box-shadow: var(--border-sunken-outer), var(--border-sunken-inner);
+	text-shadow: 1px 1px var(--text-color);
+}
+
+.toolbar-button-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+}
+
+.toolbar-separator {
+	flex: none;
+	width: 2px;
+	height: 20px;
+	margin: 0 2px;
+	background: var(--button-shadow);
+	box-shadow: 1px 0 var(--button-highlight);
+}
+
+.toolbar-spacer {
+	flex: 1 1 auto;
+}
+
+/* ---------------------------------------------------------------- combo box */
+
+.combo-box {
+	display: inline-flex;
+	align-items: stretch;
+	height: 21px;
+	background: var(--button-highlight);
+	box-shadow: var(--border-field);
+	vertical-align: top;
+}
+
+.field-row > .combo-box,
+.field-row-stacked > .combo-box {
+	flex: 1 1 auto;
+	min-width: 60px;
+	align-self: flex-start;
+}
+
+.combo-box-input {
+	flex: 1 1 auto;
+	min-width: 0;
+	padding: 0 3px;
+	border: none;
+	background: transparent;
+	box-shadow: none;
+	color: var(--text-color);
+	font-family: inherit;
+	font-size: 11px;
+}
+
+.combo-box-input:focus {
+	outline: none;
+}
+
+.combo-box-input:disabled {
+	color: var(--button-shadow);
+	text-shadow: 1px 1px var(--button-highlight);
+}
+
+.combo-box-button {
+	display: flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	width: 17px;
+	min-width: 17px;
+	min-height: 0;
+	padding: 0;
+	background: var(--button-surface);
+	box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+}
+
+.combo-box-button::before {
+	content: "";
+	display: block;
+	width: 7px;
+	height: 4px;
+	background: var(--text-color);
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 4'%3E%3Cpath d='M0 0h7L3.5 4z' fill='%23000000'/%3E%3C/svg%3E")
+		center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 4'%3E%3Cpath d='M0 0h7L3.5 4z' fill='%23000000'/%3E%3C/svg%3E")
+		center / contain no-repeat;
+}
+
+.combo-box-button:disabled::before {
+	background: var(--button-shadow);
+}
+
+.combo-box-list {
+	min-width: 80px;
+	max-height: 160px;
+	overflow: auto;
+	background: var(--button-highlight);
+	box-shadow: var(--border-field);
+	color: var(--text-color);
+}
+
+.combo-box-option {
+	padding: 2px 4px;
+	white-space: nowrap;
+	cursor: default;
+	user-select: none;
+}
+
+.combo-box-option[aria-selected="true"] {
+	font-weight: bold;
+}
+
+.combo-box-option-highlighted {
+	background: var(--dialog-blue);
+	color: var(--button-highlight);
+}
+
+.combo-box-option-disabled {
+	color: var(--button-shadow);
+	text-shadow: 1px 1px var(--button-highlight);
+}
+
+.combo-box-option-disabled.combo-box-option-highlighted {
+	background: transparent;
+	color: var(--button-shadow);
+}
+
+.combo-box-empty {
+	padding: 2px 4px;
+	color: var(--button-shadow);
+}
+
+/* -------------------------------------------------------------------- field */
+
+.field {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 2px;
+}
+
+.field-label {
+	display: block;
+}
+
+.field-required {
+	margin-left: 2px;
+	color: var(--invalid-color);
+}
+
+.field-description {
+	color: var(--button-shadow);
+}
+
+.field-error {
+	color: var(--invalid-color);
+}
+
+/* An invalid control keeps its engraved field border and gains a red outline. */
+.invalid,
+.combo-box.invalid {
+	outline: 1px solid var(--invalid-color);
+	outline-offset: -1px;
+}
+
+/* --------------------------------------------------------- sortable headers */
+
+.table-view {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.table-sort-button {
+	display: inline-flex;
+	align-items: center;
+	width: 100%;
+	min-width: 0;
+	min-height: 0;
+	padding: 0;
+	border: none;
+	background: transparent;
+	box-shadow: none;
+	color: inherit;
+	font: inherit;
+	text-shadow: none;
+}
+
+.table-sort-button:focus-visible {
+	outline: 1px dotted var(--window-frame);
+	outline-offset: -2px;
+}
+
+/* Faint when unsorted: it advertises that the column can be sorted. */
+.table-sort-arrow {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin-left: 4px;
+	border-right: 3px solid transparent;
+	border-bottom: 4px solid currentColor;
+	border-left: 3px solid transparent;
+	opacity: 0.25;
+}
+
+[aria-sort="ascending"] .table-sort-arrow,
+[aria-sort="descending"] .table-sort-arrow,
+.table-sort-button:hover .table-sort-arrow {
+	opacity: 1;
+}
+
+[aria-sort="descending"] .table-sort-arrow {
+	transform: rotate(180deg);
+}
+
+/* ---------------------------------------------------------------- pagination */
+
+.pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--grouped-button-spacing);
+}
+
+.pagination-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 22px;
+	min-height: 21px;
+	padding: 0;
+}
+
+.pagination-button::before {
+	content: "";
+	display: block;
+	width: 5px;
+	height: 8px;
+	/* A real colour: the button itself is `color: transparent`. */
+	background: var(--text-color);
+	-webkit-mask: var(--pagination-arrow) center / contain no-repeat;
+	mask: var(--pagination-arrow) center / contain no-repeat;
+}
+
+.pagination-first {
+	--pagination-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M0 0h2v8H0zM8 0 3 4l5 4z' fill='%23000000'/%3E%3C/svg%3E");
+}
+
+.pagination-previous {
+	--pagination-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 8'%3E%3Cpath d='M5 0 0 4l5 4z' fill='%23000000'/%3E%3C/svg%3E");
+}
+
+.pagination-next {
+	--pagination-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 8'%3E%3Cpath d='M0 0l5 4-5 4z' fill='%23000000'/%3E%3C/svg%3E");
+}
+
+.pagination-last {
+	--pagination-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M0 0l5 4-5 4zM6 0h2v8H6z' fill='%23000000'/%3E%3C/svg%3E");
+}
+
+.pagination-button:disabled::before {
+	background: var(--button-shadow);
+}
+
+.pagination-status {
+	min-width: 72px;
+	text-align: center;
+}

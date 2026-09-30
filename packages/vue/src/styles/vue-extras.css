@@ -1,0 +1,54 @@
+/*
+ * Additions the Vue port needs on top of the upstream 98-pink.css stylesheet.
+ *
+ * Everything in this file is *additive* — no upstream rule is overridden, so the
+ * visual result stays byte-for-byte identical to the CSS-only library unless you
+ * opt into one of these helpers.
+ */
+
+/*
+ * Button.force-active / Button.force-focused
+ * ------------------------------------------
+ * The stylesheet drives the pressed and focused looks from the real `:active`
+ * and `:focus` states. Those states cannot be forced from JavaScript, so the
+ * `active` / `focused` props instead apply these classes. They exist purely so
+ * documentation pages, Storybook stories and visual-regression tests can pin an
+ * interaction state.
+ */
+button.force-active:not(:disabled) {
+	box-shadow: var(--border-sunken-outer), var(--border-sunken-inner);
+	text-shadow: 1px 1px var(--text-color);
+}
+
+button.default.force-active:not(:disabled) {
+	box-shadow:
+		var(--default-button-border-sunken-outer), var(--default-button-border-sunken-inner);
+}
+
+button.force-focused {
+	outline: 1px dotted #000000;
+	outline-offset: -4px;
+}
+
+/*
+ * Radio / checkbox focus
+ * ----------------------
+ * Upstream styles the label on `:focus`. Mirror it for `:focus-visible` so that
+ * keyboard focus is still obvious now that the framework keeps the inputs mounted
+ * behind `opacity: 0`.
+ */
+input[type="radio"]:focus-visible + label,
+input[type="checkbox"]:focus-visible + label {
+	outline: 1px dotted #000000;
+}
+
+/*
+ * Tab panels
+ * ----------
+ * `TabPanel` uses the `hidden` attribute when `keepMounted` is on. `.window`
+ * sets a `box-shadow` but no `display`, so the attribute works on its own; this
+ * is just belt-and-braces against a consumer's `display` override.
+ */
+.window[role="tabpanel"][hidden] {
+	display: none;
+}

@@ -1,0 +1,42 @@
+{
+  "name": "98-ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Monorepo for the 98-pink Windows 98 UI revival: the CSS source of truth, its React and Vue ports, and the code they share.",
+  "license": "MIT",
+  "author": "Meorion <me@meorion.moe>",
+  "contributors": [
+    "Jordan Scales <scalesjordan@gmail.com>"
+  ],
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "catalog": {
+      "happy-dom": "^20.14.5",
+      "postcss": "^8.5.28",
+      "postcss-calc": "^7.0.5",
+      "postcss-inline-svg": "^4.1.0",
+      "prettier": "^3.9.9"
+    }
+  },
+  "scripts": {
+    "generate": "bun run --filter 98-pink-react generate && bun run --filter 98-pink-vue generate",
+    "typecheck": "bun run --filter @98-ui/tools typecheck && bun run --filter @98-ui/demo-content typecheck && bun run --filter 98-pink-shared typecheck && bun run --filter 98-pink-react typecheck && bun run --filter 98-pink-vue typecheck",
+    "build": "bun run --filter 98-pink.css build && bun run --filter @98-ui/tools typecheck && bun run --filter 98-pink-shared build && bun run --filter 98-pink-react build && bun run --filter 98-pink-vue build",
+    "test": "bun run --filter 98-pink.css test && bun run --filter @98-ui/demo-content test && bun run --filter 98-pink-shared test && bun run --filter 98-pink-react test && bun run --filter 98-pink-vue test",
+    "verify": "bun run typecheck && bun run build && bun run test",
+    "dev:react": "bun run --filter 98-pink-react dev",
+    "dev:vue": "bun run --filter 98-pink-vue dev",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "clean": "rm -rf packages/*/dist packages/*/demo-dist packages/*/.tmp"
+  },
+  "devDependencies": {
+    "prettier": "catalog:"
+  },
+  "engines": {
+    "bun": ">=1.2.0"
+  }
+}

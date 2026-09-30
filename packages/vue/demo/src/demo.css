@@ -1,0 +1,207 @@
+/*
+ * Layout for the documentation page only.
+ * Ported from the original 98-pink.css `docs/docs.css`, with the example
+ * wrapper made a little friendlier for a Vue playground.
+ */
+
+body {
+	margin: 0;
+	padding: 0;
+	background: #fff0ef;
+}
+
+main {
+	width: 65rem;
+	max-width: calc(100% - 280px);
+	margin-left: 240px;
+	margin-bottom: 60px;
+}
+
+aside {
+	width: 200px;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	padding: 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	overflow: hidden;
+}
+
+aside .tree-view {
+	width: 100%;
+	flex: 1 1 auto;
+	min-height: 0;
+	overflow-y: auto;
+}
+
+aside .tree-view a {
+	display: inline-block;
+	padding: 0 2px;
+}
+
+/* Language toggle, pinned above the navigation tree. */
+.locale-switcher {
+	flex: 0 0 auto;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #edaaa7;
+}
+
+.locale-switcher-label {
+	font-size: 11px;
+	font-weight: bold;
+	margin-bottom: 4px;
+}
+
+.locale-switcher-buttons {
+	display: flex;
+	gap: 4px;
+}
+
+.locale-switcher-buttons > button {
+	flex: 1 1 0;
+	min-width: 0;
+	padding: 0 6px;
+}
+
+h1 {
+	margin: 12px 0;
+}
+
+h2 {
+	margin-bottom: 12px;
+}
+
+h3,
+h4 {
+	padding-top: 20px;
+	margin-top: 0;
+	display: block;
+	flex: 0 0 180px;
+}
+
+h3 {
+	font-size: 1.6rem;
+}
+
+p {
+	max-width: 50rem;
+	line-height: 1.5;
+}
+
+code,
+kbd {
+	font-family: monospace;
+}
+
+kbd {
+	background: #fff;
+	box-shadow: var(--border-field);
+	padding: 1px 4px;
+}
+
+.component {
+	display: flex;
+	margin-top: 24px;
+}
+
+.component > .component-body {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+blockquote {
+	margin: 0 0 20px;
+	padding: 20px;
+	background: #ffdbd9;
+}
+
+blockquote footer {
+	margin: 12px 0 0 12px;
+}
+
+.example {
+	margin: 16px 0;
+	padding: 12px 24px;
+	border-left: 1px solid #edaaa7;
+}
+
+/*
+ * Space out the preview's *static* children only.
+ *
+ * This rule has the same specificity as the library's
+ * `.dialog { position: fixed; inset: 0; margin: auto }`, and the docs stylesheet
+ * is imported after the library's — so a bare `margin-top` here wins the cascade
+ * and pins an `inline` dialog to the top of the viewport instead of centring it.
+ * Fixed-position layers place themselves, so they are excluded.
+ */
+.example-preview
+	> * + *:not(.dialog, .dialog-overlay, .tooltip, .popover, .menu-popup, .balloon, .combo-box-list, .date-picker-popup) {
+	margin-top: 8px;
+}
+
+.example-preview .field-row + .field-row {
+	margin-top: var(--grouped-element-spacing);
+}
+
+details {
+	margin-top: 12px;
+}
+
+summary {
+	user-select: none;
+	cursor: pointer;
+	display: inline;
+}
+
+details[open] summary {
+	margin-bottom: 8px;
+}
+
+/* The live preview sits on the same pink surface as the page. */
+.example pre {
+	overflow-x: auto;
+}
+
+.stack {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	align-items: flex-start;
+}
+
+.row {
+	display: flex;
+	gap: 12px;
+	align-items: flex-start;
+	flex-wrap: wrap;
+}
+
+.note {
+	background: #ffdbd9;
+	padding: 8px 12px;
+	max-width: 46rem;
+}
+
+@media (max-width: 900px) {
+	aside {
+		display: none;
+	}
+
+	main {
+		box-sizing: border-box;
+		width: 100%;
+		max-width: 100%;
+		margin: 0;
+		padding: 16px;
+	}
+
+	.component {
+		display: block;
+	}
+
+	p {
+		width: 100%;
+	}
+}

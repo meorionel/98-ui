@@ -1,0 +1,81 @@
+{
+  "name": "98-pink-vue",
+  "version": "0.1.0",
+  "description": "Vue 3 component library port of 98-pink.css — a pink & blue Windows 98 UI revival.",
+  "license": "MIT",
+  "author": "Meorion <me@meorion.moe>",
+  "contributors": [
+    "Jordan Scales <scalesjordan@gmail.com>"
+  ],
+  "keywords": [
+    "vue",
+    "vue-components",
+    "vue3",
+    "css",
+    "windows98",
+    "pink",
+    "ui",
+    "component-library"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./style.css": "./dist/style.css",
+    "./styles/*": "./dist/styles/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "build:deps": "bun run --filter 98-pink-shared build",
+    "generate": "98-generate-styles --port vue",
+    "generate:dist": "98-generate-styles --port vue --dist",
+    "typecheck": "bun run build:deps && vue-tsc --noEmit && vue-tsc -p tsconfig.demo.json --noEmit",
+    "build": "bun run build:deps && bun run generate && vite build && bun run generate:dist && vue-tsc -p tsconfig.build.json",
+    "build:demo": "bun run build:deps && bun run generate && vite build --config vite.demo.config.ts",
+    "build:ssr": "bun run build:deps && bun run generate && vite build --config vite.ssr.config.ts",
+    "dev": "bun run build:deps && bun run generate && vite --config vite.demo.config.ts",
+    "preview": "vite preview --config vite.demo.config.ts",
+    "test": "bun run build:deps && bun run test:fidelity && bun run test:sfc && bun run test:library && bun run test:dom && bun run test:demo",
+    "test:fidelity": "98-verify-fidelity --port vue",
+    "test:sfc": "node scripts/check-sfc.mjs",
+    "test:library": "node scripts/smoke-test.mjs",
+    "test:dom": "node scripts/dom-test.mjs",
+    "test:demo": "bun run build:ssr && node scripts/ssr-check.mjs",
+    "verify": "bun run typecheck && bun run build && bun run test",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "98-pink-shared": "workspace:*"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "@98-ui/demo-content": "workspace:*",
+    "@98-ui/tools": "workspace:*",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "98-pink.css": "workspace:*",
+    "happy-dom": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.6",
+    "vue": "^3.5.39",
+    "vue-tsc": "^3.3.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meorionel/98-pink.css.git"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "name": "98-pink-shared",
+  "version": "0.1.0",
+  "description": "Framework-agnostic core of the 98-pink component libraries: floating-layer positioning, focus management, the layer z-index stack and the class-name helper.",
+  "license": "MIT",
+  "author": "Meorion <me@meorion.moe>",
+  "contributors": [
+    "Jordan Scales <scalesjordan@gmail.com>"
+  ],
+  "keywords": [
+    "windows98",
+    "pink",
+    "ui",
+    "floating",
+    "focus-trap",
+    "headless"
+  ],
+  "type": "module",
+  "main": "./dist/esm/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json && node scripts/write-cjs-package.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node scripts/smoke-test.mjs",
+    "format": "prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meorionel/98-pink.css.git"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

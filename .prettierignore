@@ -1,0 +1,14 @@
+node_modules
+dist
+demo-dist
+.tmp
+*.min.js
+
+# generated from packages/css — never formatted or edited here
+packages/*/src/styles/98-pink.css
+packages/*/src/styles/index.css
+packages/*/src/styles/fonts
+packages/*/src/styles/overlays.css
+packages/*/src/styles/controls.css
+packages/*/src/styles/widgets.css
+packages/*/src/styles/display.css
